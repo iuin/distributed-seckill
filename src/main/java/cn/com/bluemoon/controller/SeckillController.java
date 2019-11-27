@@ -88,8 +88,8 @@ public class SeckillController {
 		AssertUtil.isTrue(stallActivityId != -1, "非法参数");
 		String stockNum = redisRepository.get("BM_MARKET_SECKILL_STOCKNUM_" + stallActivityId);
 		String realStockNum = redisRepository.get("BM_MARKET_SECKILL_REAL_STOCKNUM_" + stallActivityId);
-		response.setStockNum(Long.parseLong(stockNum));
-		response.setRealStockNum(Long.parseLong(realStockNum));
+		response.setStockNum(Long.parseLong(stockNum == null ? "0" : stockNum));
+		response.setRealStockNum(Long.parseLong(realStockNum == null ? "0" : realStockNum));
 		return response;
 	}
 
