@@ -7,6 +7,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 
 import cn.com.bluemoon.common.exception.IllegalReentrantException;
 import redis.clients.jedis.Jedis;
+import redis.clients.jedis.params.SetParams;
 
 import java.io.Serializable;
 import java.util.Collections;
@@ -79,7 +80,7 @@ public class DistributedExclusiveRedisLock implements Lock, Serializable {
                 	/**
                 	 * 更新了1.0版本中，setnx成功之后程序崩溃导致的死锁的问题
                 	 */
-                	String result = jedis.set(lockKey, uuid, SET_IF_NOT_EXIST, SET_WITH_EXPIRE_TIME, expires);
+                	String result = jedis.set(lockKey,uuid, new SetParams().nx().ex(30));
                 	if (LOCK_SUCCESS.equals(result)) {
                         return true;
                     }

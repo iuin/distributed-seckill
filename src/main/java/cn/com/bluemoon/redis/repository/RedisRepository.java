@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.connection.RedisServerCommands;
-import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.ListOperations;
 import org.springframework.data.redis.core.RedisCallback;
@@ -38,7 +38,7 @@ public class RedisRepository {
     private RedisTemplate<String, String> redisTemplate;
 
     @Autowired
-    private JedisConnectionFactory jedisConnectionFactory;
+    private RedisConnectionFactory redisConnectionFactory;
 
     public RedisRepository(RedisTemplate<String, String> redisTemplate) {
         this.redisTemplate = redisTemplate;
@@ -524,7 +524,7 @@ public class RedisRepository {
      * @return
      */
     public RedisAtomicLong getRedisAtomicLong(String key) {
-        return new RedisAtomicLong(key, jedisConnectionFactory);
+        return new RedisAtomicLong(key, redisConnectionFactory);
     }
 
     /**
